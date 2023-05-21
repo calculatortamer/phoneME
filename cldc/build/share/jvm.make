@@ -217,9 +217,9 @@ ifndef target_arch
 endif
 
 # very minimal CPU specific ASM stubs
-ifeq ($(ENABLE_C_INTERPRETER), true)
-Obj_Files           +=         AsmStubs_$(target_arch)$(OBJ_SUFFIX)
-endif
+#ifeq ($(ENABLE_C_INTERPRETER), true)
+#Obj_Files           +=         AsmStubs_$(target_arch)$(OBJ_SUFFIX)
+#endif
 
 LOOP_GENERATOR       = ../../loopgen/app/loopgen$(HOST_EXE_SUFFIX)
 
