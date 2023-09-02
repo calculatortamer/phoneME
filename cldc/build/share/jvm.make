@@ -1975,16 +1975,17 @@ CPLUSPLUS_FLAGS         += -fno-exceptions
 CPLUSPLUS_FLAGS         += -fno-optional-diags
 CPLUSPLUS_FLAGS         += -fno-rtti
 CPLUSPLUS_FLAGS         += -fpermissive
-#ifndef NO_32BIT
-CPP_DEF_FLAGS_i386       = -Di386 -m32
-CPP_DEF_FLAGS_linux      = -DLINUX -m32
-# We want to link for 32-bit systems
-LINK_FLAGS             += -m32
-#else
-CPP_DEF_FLAGS_i386       = -Di386
-CPP_DEF_FLAGS_linux      = -DLINUX
-LINK_FLAGS             +=
-#endif
+
+
+ifdef NO_32BIT
+	CPP_DEF_FLAGS_i386       = -Di386
+	CPP_DEF_FLAGS_linux      = -DLINUX
+else
+	CPP_DEF_FLAGS_i386       = -Di386 -m32
+	CPP_DEF_FLAGS_linux      = -DLINUX -m32
+	LINK_FLAGS             += -m32
+	ASM_FLAGS              += --32
+endif
 CPP_DEF_FLAGS_arm	 =
 CPP_DEF_FLAGS_win32      = -DWIN32 -D_WINDOWS
 
@@ -2071,8 +2072,6 @@ CPP_FLAGS              += -pg
 LINK_FLAGS             += -pg
 endif
 
-# We want 32-bit assembly
-ASM_FLAGS              += --32
 
 ifeq ($(ENABLE_XSCALE_WMMX_INSTRUCTIONS)-$(IsTarget)-$(arch), true-true-arm)
 ASM_FLAGS              += -mcpu=iwmmxt
@@ -2317,7 +2316,7 @@ $(ANIX_LIB): $(JVM_LIB) $(ANIX_OBJS)
 	$(A)echo generated `pwd`/$@
 
 $(JVM_EXE): $(CLDC_ZIP) $(EXE_OBJS) $(JVM_LIB) $(JVMX_LIB) $(JVMTEST_LIB)
-	$(A)echo "linking $@ ... "
+	$(A)echo "linking $@ ... "	
 	$(A)$(LINK) -o $@ $(EXE_OBJS) $(JVMX_LIB) $(JVMTEST_LIB) $(JVM_LIB) \
 	     $(PCSL_LIBS) $(LINK_FLAGS) $(JC_STUBS_OBJ)
 	$(A)if [ "$(ENABLE_MAP_FILE)" != "false" ] &&             \
