@@ -217,9 +217,9 @@ ifndef target_arch
 endif
 
 # very minimal CPU specific ASM stubs
-ifeq ($(ENABLE_C_INTERPRETER), true)
-Obj_Files           +=         AsmStubs_$(target_arch)$(OBJ_SUFFIX)
-endif
+#ifeq ($(ENABLE_C_INTERPRETER), true)
+#Obj_Files           +=         AsmStubs_$(target_arch)$(OBJ_SUFFIX)
+#endif
 
 LOOP_GENERATOR       = ../../loopgen/app/loopgen$(HOST_EXE_SUFFIX)
 
@@ -1832,8 +1832,12 @@ GCC_PREFIX_thumb2  = $(GNU_TOOLS_DIR)/bin/
 GCC_PREFIX_i386    =
 GCC_PREFIX_sparc   =
 GCC_PREFIX_powerpc =
+#ifndef GCC_PREFIX_c
 GCC_PREFIX_c       = $(GCC_PREFIX_$(target_arch))
 GCC_PREFIX         = $(GCC_PREFIX_$(gcc_arch))
+#else
+GCC_PREFIX       = $(GCC_PREFIX_C)
+#endif
 
 # GCC 4.2 and 4.3 issue false positive warnings about uninitialized variables
 ENABLE_WEAK_GCC_WARNINGS = false
@@ -1970,11 +1974,22 @@ CPLUSPLUS_FLAGS         += -fno-operator-names
 CPLUSPLUS_FLAGS         += -fno-exceptions
 CPLUSPLUS_FLAGS         += -fno-optional-diags
 CPLUSPLUS_FLAGS         += -fno-rtti
+CPLUSPLUS_FLAGS         += -fpermissive
 
-CPP_DEF_FLAGS_i386       = -Di386 -m32
+
+ifdef NO_32BIT
+	CPP_DEF_FLAGS_i386       = -Di386
+	CPP_DEF_FLAGS_linux      = -DLINUX
+else
+	CPP_DEF_FLAGS_i386       = -Di386 -m32
+	CPP_DEF_FLAGS_linux      = -DLINUX -m32
+	LINK_FLAGS             += -m32
+	ASM_FLAGS              += --32
+endif
 CPP_DEF_FLAGS_arm	 =
 CPP_DEF_FLAGS_win32      = -DWIN32 -D_WINDOWS
-CPP_DEF_FLAGS_linux      = -DLINUX -m32
+
+
 ifeq ($(target_platform), linux_javacall)
 CPP_DEF_FLAGS_javacall   = -DLINUX
 endif
@@ -1982,6 +1997,9 @@ ifeq ($(host_os), cygwin)
 CPP_DEF_FLAGS            += -DCYGWIN
 ENABLE_MAP_FILE          = false
 endif
+
+CPP_DEF_FLAGS_c = -fpermissive
+
 CPP_DEF_FLAGS           += $(CPP_DEF_FLAGS_$(BUILD)) $(CPP_DEF_FLAGS_$(arch)) \
                            $(CPP_DEF_FLAGS_$(os_family))
 
@@ -1997,7 +2015,8 @@ CPP_FLAGS_EXPORT         = $(CPP_DEF_FLAGS) $(CPLUSPLUS_FLAGS)
 CPP_FLAGS                = $(CPP_FLAGS_EXPORT) $(CPP_INCLUDE_DIRS)
 
 ifneq ($(ENABLE_COMPILATION_WARNINGS), true)
-CPP_FLAGS               += -Werror
+#doing everyone a favor
+#CPP_FLAGS               += -Werror
 endif
 
 LINK_OPT_FLAGS_debug    = $(DEBUG_SYMBOLS_FLAGS)
@@ -2017,8 +2036,7 @@ ifeq ($(LINK_PTHREAD), true)
 LINK_FLAGS             += -lpthread
 endif
 
-# We want to link for 32-bit systems
-LINK_FLAGS             += -m32
+
 
 ifeq ($(ENABLE_PCSL), true)
 PCSL_LIBS               = $(PCSL_DIST_DIR)/lib/libpcsl_memory.a  \
@@ -2054,8 +2072,6 @@ CPP_FLAGS              += -pg
 LINK_FLAGS             += -pg
 endif
 
-# We want 32-bit assembly
-ASM_FLAGS              += --32
 
 ifeq ($(ENABLE_XSCALE_WMMX_INSTRUCTIONS)-$(IsTarget)-$(arch), true-true-arm)
 ASM_FLAGS              += -mcpu=iwmmxt
@@ -2300,7 +2316,7 @@ $(ANIX_LIB): $(JVM_LIB) $(ANIX_OBJS)
 	$(A)echo generated `pwd`/$@
 
 $(JVM_EXE): $(CLDC_ZIP) $(EXE_OBJS) $(JVM_LIB) $(JVMX_LIB) $(JVMTEST_LIB)
-	$(A)echo "linking $@ ... "
+	$(A)echo "linking $@ ... "	
 	$(A)$(LINK) -o $@ $(EXE_OBJS) $(JVMX_LIB) $(JVMTEST_LIB) $(JVM_LIB) \
 	     $(PCSL_LIBS) $(LINK_FLAGS) $(JC_STUBS_OBJ)
 	$(A)if [ "$(ENABLE_MAP_FILE)" != "false" ] &&             \
