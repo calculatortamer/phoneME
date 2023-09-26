@@ -58,7 +58,7 @@ print OUT " */\n\n";
 print OUT "/* This file is auto-generated. Do not edit*/\n\n";
 print OUT "#ifndef _ROM_STRUCTS_H_\n";
 print OUT "#define _ROM_STRUCTS_H_\n\n";
-print OUT "#define int32_t int\n\n";
+print OUT "typedef int int32_t;\n\n";
 print OUT "#define CVM_OBJ_HEADER void* dummy1; void* dummy2\n\n";
 print OUT "typedef struct {\n";
 print OUT "    CVM_OBJ_HEADER;\n";

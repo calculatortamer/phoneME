@@ -240,11 +240,27 @@ $(MIDP_OUTPUT_DIR)/ROMImage.cpp: $(MIDP_CLASSES_ZIP) \
 		-romincludepath $(path)) $(LOG)
 
 	@cd $(MIDP_OUTPUT_DIR); \
-	$(ROMGEN_CMD) $(ROMGEN_ARGS) \
+	echo $(ROMGEN_CMD) $(ROMGEN_ARGS) \
 		-cp $(MIDP_CLASSES_ZIP) \
 		-romize =HeapCapacity128M \
 		$(foreach path, $(ROMGEN_INCLUDE_PATHS), \
 		-romincludepath $(path)) $(LOG)
+    
+    #copied from cdc_vm.gmk
+	@echo "creating $(MIDP_OUTPUT_DIR)/ROMStructs.h... $(CVM_BUILDTIME_CLASSESZIP)"
+	$(AT)$(JDK_DIR)/bin/javah -old \
+		-bootclasspath $(CLDC_OUTPUT_DIR)/classes \
+		-classpath $(MIDP_OUTPUT_DIR)/classes -o $(MIDP_OUTPUT_DIR)/ROMStructs.h \
+	javax.microedition.lcdui.Graphics \
+	javax.microedition.lcdui.Image \
+	javax.microedition.lcdui.ImageData \
+	javax.microedition.lcdui.Font \
+	java.lang.String \
+	com.sun.midp.rms.RecordStoreFile \
+	com.sun.midp.chameleon.input.NativeInputMode \
+	com.sun.midp.io.j2me.storage.RandomAccessStream \
+	javax.microedition.lcdui.game.GameCanvas
+	$(AT)perl $(MIDP_DIR)/build/common/genROMStructs.pl $(MIDP_OUTPUT_DIR)/ROMStructs.h
 
 
 CLDC_JAVA_LANG_OBJECT_CLASS = $(CLASSBINDIR)/java/lang/Object.class
