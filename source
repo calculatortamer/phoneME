@@ -1,0 +1,30 @@
+#CONFIG
+export JDK_DIR=$HOME/java/j2sdk1.4.2_19/
+multitask=false
+
+
+#CONFIG END
+export COMPONENTS_DIR=$PWD
+export BUILD_OUTPUT_DIR=$PWD/build_out
+
+export JAVACALL_DIR=$PWD/javacall
+export JAVACALL_OUTPUT_DIR=$BUILD_OUTPUT_DIR/javacall
+#JAVACALL_LIB_DIR, undocumented/forgotten required variable
+export JAVACALL_LIB_DIR=$BUILD_OUTPUT_DIR/javacall/lib
+export USE_MULTIPLE_ISOLATES=$multitask
+
+export TOOLS_DIR=$PWD/tools
+export TOOLS_OUTPUT_DIR=$BUILD_OUTPUT_DIR/tools
+
+export PCSL_PLATFORM="javacall_i386_gcc"
+export PCSL_OUTPUT_DIR=$BUILD_OUTPUT_DIR/pcsl
+
+export JVMWorkSpace=$PWD/cldc
+export JVMBuildSpace=$BUILD_OUTPUT_DIR/cldc
+export ENABLE_PCSL=true
+export ENABLE_ISOLATES=$USE_MULTIPLE_ISOLATES
+export ROMIZING=false
+
+export MIDP_OUTPUT_DIR=$BUILD_OUTPUT_DIR/midp
+export JAVACALL_PLATFORM="linux_i386_gcc"
+export CLDC_DIST_DIR=$JVMBuildSpace/$PCSL_PLATFORM/dist
