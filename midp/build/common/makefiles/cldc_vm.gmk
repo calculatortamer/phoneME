@@ -259,7 +259,8 @@ $(MIDP_OUTPUT_DIR)/ROMImage.cpp: $(MIDP_CLASSES_ZIP) \
 	com.sun.midp.rms.RecordStoreFile \
 	com.sun.midp.chameleon.input.NativeInputMode \
 	com.sun.midp.io.j2me.storage.RandomAccessStream \
-	javax.microedition.lcdui.game.GameCanvas
+	javax.microedition.lcdui.game.GameCanvas \
+    com.sun.midp.events.EventQueue
 	$(AT)perl $(MIDP_DIR)/build/common/genROMStructs.pl $(MIDP_OUTPUT_DIR)/ROMStructs.h
 
 
