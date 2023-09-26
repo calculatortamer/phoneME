@@ -163,10 +163,10 @@ ifneq ($(USE_DEBUG), true)
 endif
 
 # Generated code
-JTWI_NATIVE_FILES += ROMImage.cpp nativeFunctionTable.cpp
+#JTWI_NATIVE_FILES += ROMImage.cpp nativeFunctionTable.cpp
 
 # Needs to define to build ROMImage.cpp
-EXTRA_CFLAGS += -DROMIZING
+#EXTRA_CFLAGS += -DROMIZING
 
 CLDC_CLASSES_ZIP = $(CLDC_DIST_DIR)/lib/cldc_classes.zip
 CLDCTEST_CLASSES_ZIP = $(CLDC_DIST_DIR)/lib/cldctest_classes.zip
@@ -260,7 +260,13 @@ $(MIDP_OUTPUT_DIR)/ROMImage.cpp: $(MIDP_CLASSES_ZIP) \
 	com.sun.midp.chameleon.input.NativeInputMode \
 	com.sun.midp.io.j2me.storage.RandomAccessStream \
 	javax.microedition.lcdui.game.GameCanvas \
-    com.sun.midp.events.EventQueue
+    com.sun.midp.events.EventQueue \
+    com.sun.midp.io.j2me.socket.Protocol com.sun.midp.io.j2me.serversocket.Socket com.sun.midp.io.j2me.datagram.Protocol
+
+    #pro tip if you get errors like : invalid use of incomplete typedef ‘_datagramProtocol’ {aka ‘struct Java_com_sun_midp_io_j2me_datagram_Protocol’}
+    #add the missing class above :
+    #convert Java_com_sun_midp_io_j2me_datagram_Protocol into com.sun.midp.io.j2me.datagram.Protocol
+
 	$(AT)perl $(MIDP_DIR)/build/common/genROMStructs.pl $(MIDP_OUTPUT_DIR)/ROMStructs.h
 
 

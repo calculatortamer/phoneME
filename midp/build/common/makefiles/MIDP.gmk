@@ -243,9 +243,9 @@ $(OBJ_DIR)/%.o: %.c
 	@echo " ... $@" $(LOG)
 	$(A)$(CC) $(CFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` $(LOG)
 
-$(OBJ_DIR)/ROMImage.o: $(MIDP_OUTPUT_DIR)/ROMImage.cpp
-	@echo " ... $@" $(LOG)
-	$(A)$(CPP) $(CPPFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` $(LOG)
+#$(OBJ_DIR)/ROMImage.o: $(MIDP_OUTPUT_DIR)/ROMImage.cpp
+#	@echo " ... $@" $(LOG)
+#	$(A)$(CPP) $(CPPFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` $(LOG)
 
 $(OBJ_DIR)/nativeFunctionTable.o: $(MIDP_OUTPUT_DIR)/nativeFunctionTable.cpp
 	@echo " ... $@" $(LOG)

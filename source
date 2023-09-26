@@ -28,3 +28,6 @@ export ROMIZING=false
 export MIDP_OUTPUT_DIR=$BUILD_OUTPUT_DIR/midp
 export JAVACALL_PLATFORM="linux_i386_gcc"
 export CLDC_DIST_DIR=$JVMBuildSpace/$PCSL_PLATFORM/dist
+
+#undocumented variable, should fix build error
+export USE_DYNAMIC_PERMISSIONS=false
