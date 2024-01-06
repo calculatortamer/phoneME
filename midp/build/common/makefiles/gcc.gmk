@@ -102,7 +102,7 @@ LIBS     += $(GCC_LIBS)
 # Options to force single-pass linker to search undefined references repeatly.
 # Note. '-Wl,' option cannot be used instead of -Xlinker
 LD_START_GROUP ?= -Xlinker --start-group
-LD_END_GROUP ?= --end-group
+LD_END_GROUP ?= -Wl,--end-group
 
 AR		= $(GNU_TOOLS_BINDIR)ar
 AR_FLAGS	= -rcs
