@@ -61,7 +61,7 @@ CC = gcc
 
 CFLAGS = -DENABLE_MIDP_MALLOC=0 -w -fno-gnu-keywords $(INCLUDES) $(OS_CFLAGS)
 
-LD = g++
+LD = ld
 
 LD_FLAGS = 
 

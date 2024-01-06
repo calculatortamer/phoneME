@@ -32,7 +32,7 @@ CC  = gcc
 
 CFLAGS = -w -fno-gnu-keywords -I../../../../ams/common/native/share/inc
 
-LD = g++
+LD = ld
 
 LD_FLAGS = 
 
