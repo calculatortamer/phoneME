@@ -39,29 +39,29 @@
 #
 
 $(BINDIR)/runNams$(g)$(p)$(EXE): $(MIDP_DEPS) $(OBJLIB) $(AMS_RUNNAMS_OBJ_FILES)
-	@echo " ... linking $@ " $(LOG)
+	@echo " ... linking using $(LD) $@ " $(LOG)
 	$(A)$(LD) $(LD_FLAGS) $(LINKER_OUTPUT)`$(call fixcygpath,$@ \
 		$(LD_START_GROUP) $(AMS_RUNNAMS_OBJ_FILES) $(OBJLIB) $(LIBS))` $(LD_END_GROUP) $(LOG)
 
 $(BINDIR)/removeMidlet$(g)$(p)$(EXE): $(MIDP_DEPS) $(OBJLIB) $(AMS_REMOVEMIDLET_OBJ_FILES)
-	@echo " ... linking $@ " $(LOG)
+	@echo " ... linking using $(LD) $@ " $(LOG)
 	$(A)$(LD) $(LD_FLAGS) $(LINKER_OUTPUT)`$(call fixcygpath,$@ \
 		$(LD_START_GROUP) $(AMS_REMOVEMIDLET_OBJ_FILES) $(OBJLIB) $(LIBS))` $(LD_END_GROUP) $(LOG)
 
 $(BINDIR)/listMidlets$(g)$(p)$(EXE): $(MIDP_DEPS) $(OBJLIB) $(AMS_LISTMIDLET_OBJ_FILES)
-	@echo " ... linking $@ " $(LOG)
+	@echo " ... linking using $(LD) $@ " $(LOG)
 	$(A)$(LD) $(LD_FLAGS) $(LINKER_OUTPUT)`$(call fixcygpath,$@ \
 		$(LD_START_GROUP) $(AMS_LISTMIDLET_OBJ_FILES) $(OBJLIB) $(LIBS))` $(LD_END_GROUP) $(LOG)
 
 $(BINDIR)/fileInstaller$(g)$(p)$(EXE): $(MIDP_DEPS) $(OBJLIB) $(AMS_FILEINSTALLER_OBJ_FILES)
-	@echo " ... linking $@ " $(LOG)
+	@echo " ... linking using $(LD) $@ " $(LOG)
 	$(A)$(LD) $(LD_FLAGS) $(LINKER_OUTPUT)`$(call fixcygpath,$@ \
 		$(LD_START_GROUP) $(AMS_FILEINSTALLER_OBJ_FILES) $(OBJLIB) $(LIBS))` $(LD_END_GROUP) $(LOG)
 
 ifeq ($(TARGET_PLATFORM), javacall)
 ifeq ($(JAVACALL_PLATFORM), win32_i386_vc)
 $(BINDIR)/postTestMsg.exe: $(OBJ_DIR)/postTestMsg.o
-	@echo " ... linking $@ " $(LOG)
+	@echo " ... linking using $(LD) $@ " $(LOG)
 	$(A)$(LD) $(LD_FLAGS) \
 		$(LINKER_OUTPUT)`$(call fixcygpath,$@ $(OBJ_DIR)/postTestMsg.o \
 		$(LIBS))` $(LOG)
